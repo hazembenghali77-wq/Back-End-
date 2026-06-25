@@ -3,7 +3,7 @@ const mongoose = require("mongoose")
 const orderSchema = mongoose.Schema({
     CreatedAt: { type: Date, default: Date.now },
     products: Array,
-    owner: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    owner: { type: mongoose.Schema.Types.ObjectId,required: true, ref: "User" },
     name: { type: String, required: true },
     surname: { type: String, required: true },
     email: { type: String, required: true },

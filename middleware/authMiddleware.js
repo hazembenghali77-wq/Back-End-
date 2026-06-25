@@ -3,8 +3,9 @@ const jwt = require("jsonwebtoken")
 const authMiddleware = async(req,res,next) => {
     try {
     const token = req.headers.token
+    console.log("TOKEN RECEIVED:", token)
     if(!token) 
-        res.status(401).json({msg:"You Are Not Authorized"})
+    return res.status(401).json({msg:"You Are Not Authorized"})
     else{
         const verifyToken = jwt.verify(token,process.env.JWT_SECRET)
         req.userId = verifyToken.id
@@ -12,7 +13,7 @@ const authMiddleware = async(req,res,next) => {
     }
     }
     catch(err) {
-               res.status(500).json({msg:"Error In Middleware"})
+    return res.status(500).json({msg:"Error In Middleware"})
     }
 }
 
