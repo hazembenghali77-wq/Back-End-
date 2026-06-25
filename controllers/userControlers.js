@@ -293,6 +293,27 @@ const getTotalRevenue = async (req, res) => {
   }
 }
 
+const getStats = async (req, res) => {
+  try {
+    const [totalOrders, totalProducts, totalUsers] = await Promise.all([
+      Order.countDocuments(),
+      Product.countDocuments(),
+      User.countDocuments()
+    ])
+
+    return res.status(200).json({
+      totalOrders,
+      totalProducts,
+      totalUsers
+    })
+  } catch (err) {
+    return res.status(500).json({
+      msg: "Error calculating stats",
+      err: err.message
+    })
+  }
+}
+
 const deleteOrder = async (req, res) => {
   try {
     const { id } = req.params
@@ -376,4 +397,4 @@ const LoggedInOrder = async (req, res) => {
 
 
 
-module.exports = {LoggedInOrder,deleteOrder,register,login,getProduct,createProduct,createOrder,getUserorder,deleteProduct,updateProduct,getAllOrders,getTotalRevenue,getAllUsers,deleteUser}
+module.exports = {LoggedInOrder,deleteOrder,register,login,getProduct,createProduct,createOrder,getUserorder,deleteProduct,updateProduct,getAllOrders,getTotalRevenue,getAllUsers,deleteUser,getStats}
